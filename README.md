@@ -4,21 +4,20 @@
 
 | Column             | Type                | Options                   |
 |--------------------|---------------------|---------------------------|
-| nickname           | string              | null: false, unique: true |
+| nickname           | string              | null: false               |
 | email              | string              | null: false, unique: true |
 | encrypted_password | string              | null: false               |
 | last_name          | string              | null: false               |
 | first_name         | string              | null: false               |
 | last_name_kana     | string              | null: false               |
 | first_name_kana    | string              | null: false               |
-| birthday_yy        | integer             | null: false               |
-| birthday_mm        | integer             | null: false               |
-| birthday_dd        | integer             | null: false               |
+| birth_date         | date                | null: false               |
 
 ### Association
 
 * has_many :items
 * has_many :orders
+* has_many :purchases
 
 
 ## items table
@@ -27,38 +26,56 @@
 |-------------------------------------|------------|--------------------------------|
 | name                                | string     | null: false                    |
 | info                                | text       | null: false                    |
-| category                            | string     | null: false                    |
-| sales_status                        | string     | null: false                    |
+| category_id                         | integer    | null: false                    |
+| sales_status_id                     | integer    | null: false                    |
 | price                               | integer    | null: false                    |
 | user                                | references | null: false, foreign_key: true |
-| item_shipping_fee_status            | string     | null: false                    |
-| item_prefecture                     | string     | null: false                    |
-| item_scheduled_delivery             | string     | null: false                    |
-
+| item_shipping_fee_status_id         | integer    | null: false                    |
+| item_prefecture_id                  | integer    | null: false                    |
+| item_scheduled_delivery_id          | integer    | null: false                    |
 
 ### Association
 
 * belongs_to :user
-* belongs_to :order
+* has_one :order
+* has_one :purchase
+
 
 ## orders table
 
 | Column         | Type       | Options                        |
 |----------------|------------|--------------------------------|
-| card_number    | string     | null: false                    |
-| card_exp_month | integer    | null: false                    |
-| card_exp_year  | integer    | null: false                    |
-| card_cvc       | integer    | null: false                    |
-| postal_code    | string     | null: false                    |
-| prefecture     | string     | null: false                    |
-| city           | string     | null: false                    |
-| addresses      | string     | null: false                    |
-| building       | string     |                                |
-| phone_number   | string     | null: false                    |
 | user           | references | null: false, foreign_key: true |
 | item           | references | null: false, foreign_key: true |
 
 ### Association
 
 * belongs_to :user
-* has_one :item
+* belongs_to :item
+
+
+## shipping_addresses table
+
+| postal_code    | string     | null: false                    |
+| prefecture_id  | integer    | null: false                    |
+| city           | string     | null: false                    |
+| addresses      | string     | null: false                    |
+| building       | string     |                                |
+| phone_number   | string     | null: false                    |
+| purchase       | references | null: false, foreign_key: true |
+
+### Association
+
+* belongs_to :purchase
+
+
+## purchases table
+
+| user           | references | null: false, foreign_key: true |
+| item           | references | null: false, foreign_key: true |
+
+### Association
+
+* belongs_to :user
+* belongs_to :item
+* has_one :shipping_address
