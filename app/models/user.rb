@@ -6,10 +6,10 @@ class User < ApplicationRecord
 
   # has_many :items
   # has_many :orders
-              
+
   validates :nickname, presence: true
   validates :email, presence: true
-  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
   validates :password, presence: true, format: { with: VALID_PASSWORD_REGEX }
   HIRAGANA_KATAKANA_KANJI_REGEXP = /\A[ぁ-んァ-ン一-龥]/
   validates :last_name, presence: true, format: { with: HIRAGANA_KATAKANA_KANJI_REGEXP }
@@ -18,5 +18,4 @@ class User < ApplicationRecord
   validates :last_name_kana, presence: true, format: { with: KATAKANA_REGEXP }
   validates :first_name_kana, presence: true, format: { with: KATAKANA_REGEXP }
   validates :birth_date, presence: true
-
 end
