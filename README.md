@@ -17,7 +17,6 @@
 
 * has_many :items
 * has_many :orders
-* has_many :purchases
 
 
 ## items table
@@ -31,14 +30,13 @@
 | price                               | integer    | null: false                    |
 | user                                | references | null: false, foreign_key: true |
 | item_shipping_fee_status_id         | integer    | null: false                    |
-| item_prefecture_id                  | integer    | null: false                    |
+| prefecture_id                       | integer    | null: false                    |
 | item_scheduled_delivery_id          | integer    | null: false                    |
 
 ### Association
 
 * belongs_to :user
 * has_one :order
-* has_one :purchase
 
 
 ## orders table
@@ -52,6 +50,7 @@
 
 * belongs_to :user
 * belongs_to :item
+* has_one :shipping_address
 
 
 ## shipping_addresses table
@@ -62,20 +61,8 @@
 | addresses      | string     | null: false                    |
 | building       | string     |                                |
 | phone_number   | string     | null: false                    |
-| purchase       | references | null: false, foreign_key: true |
+| order          | references | null: false, foreign_key: true |
 
 ### Association
 
-* belongs_to :purchase
-
-
-## purchases table
-
-| user           | references | null: false, foreign_key: true |
-| item           | references | null: false, foreign_key: true |
-
-### Association
-
-* belongs_to :user
-* belongs_to :item
-* has_one :shipping_address
+* belongs_to :order
