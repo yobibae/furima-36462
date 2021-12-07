@@ -130,15 +130,15 @@
       <ul class='item-lists'>
         <% @items.each do |item| %>
           <li class='list'>
-            <%= link_to items_path(item.id), method: :get do %>
+            <%= link_to "#" do %>
             <div class='item-img-content'>
               <%= image_tag item.image, class: "item-img" %>
 
-              <% if @user_item %> 
+              <%# if @user_item %>
                 <div class='sold-out'>
                   <span>Sold Out!!</span>
                 </div>
-              <% end %>
+              <%# end %>
 
             </div>
             <div class='item-info'>
@@ -157,8 +157,8 @@
           </li>
         <% end %>
         <% else %>
-
-          <%= link_to '#' do %>
+      <li class='list'>
+        <%= link_to '#' do %>
           <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
           <div class='item-info'>
             <h3 class='item-name'>
@@ -174,7 +174,7 @@
           </div>
           <% end %>
         <% end %>
-
+      </li>
     </ul>
   </div>
   <%# /商品一覧 %>
