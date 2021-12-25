@@ -38,22 +38,27 @@ RSpec.describe OrderShippingAddress, type: :model do
       it 'cityが空だと保存できないこと' do
         @order_shipping_address.city = ''
         @order_shipping_address.valid?
-        expect(@order_shipping_addresses.errors.full_messages).to include("City can't be blank")
+        expect(@order_shipping_address.errors.full_messages).to include("City can't be blank")
       end
       it 'addressが空だと保存できないこと' do
         @order_shipping_address.address = ''
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Address can't be blank")
       end
+      it 'phone_numberが空だと保存できないこと' do
+        @order_shipping_address.phone_number = ''
+        @order_shipping_address.valid?
+        expect(@order_shipping_address.errors.full_messages).to include("Phone number can't be blank")
+      end
       it 'phone_numberが全角数字だと保存できないこと' do
         @order_shipping_address.phone_number = '０１２３４５６７８９'
         @order_shipping_address.valid?
-        expect(@order_shipping_address.errors.full_messages).to include('Phone number is invalid. Input only number')
+        expect(@order_shipping_address.errors.full_messages).to include("Phone number is not a number")
       end
       it 'phone_numberが10ケタ未満では保存できないこと' do
         @order_shipping_address.phone_number = 0
         @order_shipping_address.valid?
-        expect(@order_shipping_address.errors.full_messages).to include('Phone number is too short')
+        expect(@order_shipping_address.errors.full_messages).to include("Phone number is too short (minimum is 10 characters)")
       end
     end
   end
