@@ -5,14 +5,12 @@ class OrderShippingAddress
   with_options presence: true do
     validates :user_id
     validates :item_id
-    validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
+    validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)", allow_blank: true}
     validates :city
     validates :address
-    validates :phone_number,numericality: { only_integer: true }, length: {in: 10..11}
-              #  format: {with: /\A\d{10,11}\z/}
+    validates :phone_number,numericality: { only_integer: true, allow_blank: true}, length: {in: 10..11, allow_blank: true}
   end
-  validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
-
+  validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
