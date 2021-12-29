@@ -4,6 +4,9 @@ class OrdersController < ApplicationController
   def index
     @item = Item.find(params[:item_id])
     @order_shipping_address = OrderShippingAddress.new
+    if @item.user_id == current_user.id || @item.order != nil
+      redirect_to root_path
+    end
   end
 
   def create
@@ -22,4 +25,5 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order_shipping_address).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
   end
+
 end
