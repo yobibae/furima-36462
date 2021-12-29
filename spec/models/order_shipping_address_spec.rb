@@ -31,7 +31,7 @@ RSpec.describe OrderShippingAddress, type: :model do
         expect(@order_shipping_address.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
       end
       it 'prefecture_idを選択していないと保存できないこと' do
-        @order_shipping_address.prefecture_id = 0
+        @order_shipping_address.prefecture_id = 1
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Prefecture can't be blank")
       end
@@ -59,6 +59,11 @@ RSpec.describe OrderShippingAddress, type: :model do
         @order_shipping_address.phone_number = 0
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Phone number is too short (minimum is 10 characters)")
+      end
+      it "tokenが空では登録できないこと" do
+        @order_shipping_address.token = nil
+        @order_shipping_address.valid?
+        expect(@order_shipping_address.errors.full_messages).to include("Token can't be blank")
       end
     end
   end
